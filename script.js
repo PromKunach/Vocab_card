@@ -199,9 +199,23 @@ function reveal(){
         meaning_text.style.display = "block";
         reveal_mode = 0;
     }
- 
+}
+
+function restart(){
+    current_number = 0;
+    print_split();
+}
+
+function random_word(){
+    let random_num = 9999999
+    let new_random = 0;
+    new_random = Math.floor(Math.random() * (splitted_line.length + 1))
+    console.log(new_random);
+    while(new_random == random_num){
+        new_random = parseInt(Math.random(0,splitted_line.length))
+    }
+    random_num = new_random
+    current_number = new_random
     
-    
-   
-   
+  print_split();
 }
