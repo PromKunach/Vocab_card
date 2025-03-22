@@ -73,22 +73,35 @@ nav button{
 
 }
 
-#control-button{
-    display: flex;
+footer{
+    
     position: fixed;
-    bottom: 0; /* Position at the bottom */
-    left: 0;   /* Align to the left of the screen */
+    bottom: 120px; /* Position at the bottom */
+   
     width: 100%; /* Optionally, stretch it across the screen */
     height: 100px;
     
-    justify-content: space-evenly;
-    align-items: center;
+  
 }
-#control-button button{
+#control-button{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+footer button{
    height: 100px;
    width: 100px;
 }
 
+#skip{
+  display: flex;
+  justify-content: center;
+
+}
+#skip button{
+  margin-bottom: 20px;
+}
 @media (max-width:383px) {
     #card{
         width: 200px;   

@@ -3,6 +3,23 @@ Detention : การคุมขัง (n.)
 Levy : การเก็บภาษี (n.) 
 A great deal : เยอะ มาก (adj.)
 Abide : ยอมปฏิบัติตาม (v.)
+Abound : มีมากมาย ชุกชุม (v.)
+Paradigm : เเบบจำลอง ตัวอย่าง (n.)
+Hallmark :  เครื่องหมายรับรอง (n.)
+Damp : ความชื้น (n.)
+Abolish : เลิกล้ม (v.)
+Salvage : กอบกู้ (v.)
+Canvass : การหาเสียง (n.)
+Eager : ความกระตือรือร้น (n.)
+Shrewdness : ความเฉลียวฉลาด (n.)
+Testimonail : หนังสือรับรอง (n.)
+Shrug off : ไม่เอาใจใส่ (phrav.)`;
+/*
+let original_list = `Bribe : ติดสินบน (v.) 
+Detention : การคุมขัง (n.)
+Levy : การเก็บภาษี (n.) 
+A great deal : เยอะ มาก (adj.)
+Abide : ยอมปฏิบัติตาม (v.)
 Abbreviation : การย่อคำ (n.)
 Jeopardy : อันตราย (n.)
 Abound : มีมากมาย ชุกชุม (v.)
@@ -152,14 +169,12 @@ Relictant : ฝืนใจ (v.)
 Interpret : อธิบาย (v.)
 Set in stone : ไม่สามารถเปลี่ยนได้ (phrav.)
 Superstition : ไสยศาสตร์ (n.)`;
-
+*/
 let split_line = original_list.split("\n");
 
 let split_words = [
    
 ]
-
-
 
 function split(text){
     let split_line = text.split("\n");
@@ -187,11 +202,12 @@ function print_split(){
     let word_text = document.getElementById("word-eng");
     let meaning_text = document.getElementById("meaning");
     let count_text = document.getElementById("timer");  
+    
         let word = split_words[current_number]["word"];
         let meaning = split_words[current_number]["meaning"];
         //console.log(word, "=",meaning);
         word_text.textContent = word;
-        count_text.textContent = (current_number+1 + " / " + (split_line.length))
+        count_text.textContent = (current_number+1 + " / " + (split_words.length))
         meaning_text.textContent = meaning;
   
     
@@ -216,6 +232,7 @@ function reveal(){
 
 function restart(){
     current_number = 0;
+   
     print_split();
 }
 
@@ -245,37 +262,39 @@ function active_converter(){
         converter_div.style.display = "none";
         convert_active_state = 0;
     }
-
+skipped_words.length = 0;
 }
 
-function convert(text){
-   
-    let new_list = split(text);
-    split_line = new_list;   
-    split_tolist(split_line);
 
-
-    print_split()
-    active_converter();
-}
 
 function defualt(){
     current_number = 0;
 
     convert(original_list);
 }
+function convert(text){
+   
+    let new_list = split(text);
+    split_line = new_list;   
+    split_tolist(split_line);
+    print_split()
+    
+}
 function submit(){
+    split_words.length = 0;
+    skipped_words.length = 0;
     current_number = 0;
     let input_form = document.getElementById("convert_form");
     let text = input_form.value;
     convert(text);
+    active_converter();
    split_tolist(split_line);  
    submit_check(split_words);
    //console.log(split_words);
    print_split();
+   skipped_words.length = 0;
 
 }
-
 function submit_check(split_list){
     let alert_text = ""
     for (i = 0;i<split_list.length;i++){
@@ -283,58 +302,90 @@ function submit_check(split_list){
             alert_text = "word and meaning missing !";
             split_list[i]["word"] = "missing !";
             split_list[i]["meaning"] = "missing !";
-            console.log(alert_text);
+            //console.log(alert_text);
         }
         else if((split_list[i]["word"] == "" || split_list[i]["word"] == undefined)){
             alert_text = ("The word which means "+'"'+split_list[i]["meaning"]+'"'+" is missing !");
             split_list[i]["word"] = "missing !";
-            console.log(alert_text);
+            //console.log(alert_text);
 
         }
         else if((split_list[i]["meaning"] == "" ||(split_list[i]["meaning"] == undefined )))
         {
             alert_text = ("The word "+'"'+split_list[i]["word"]+'"'+" is missing its meaning");
             split_list[i]["meaning"] = "missing !";
-            console.log(alert_text);
+            //console.log.log(alert_text);
 
         }
         else{
             alert_text = "success";
-            console.log(alert_text);
+            //console.log(alert_text);
 
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 
 function add(){
-    if(current_number < split_line.length){
+    if(current_number+1 < split_words.length){
         current_number += 1;
+        
         print_split();
+
     }
-  
+    else if((current_number + 1 == split_words.length && skipped_words.length > 0)){
+
+        current_number = 0;
+        tranfer(skipped_words,split_words);
+        print_split();
+        skipped_words.length = 0;
+    }
+    //console.log(current_number + "lenght is " + split_words.length);
 
 }
+
+
+
+
+
 function subtract(){
+
     if(current_number > 0){
         current_number -= 1;
         print_split();
     }
   
+    console.log(current_number);
   
+}
+
+let skipped_words = [
+   
+]
+
+function skip(){
+    let list = split_words;
+    let sword = list[current_number]["word"];
+    let smeaning = list[current_number]["meaning"];
+    skipped_words.push({word:sword,meaning:smeaning});
+}
+
+function tranfer(list1,list2){
+    console.log(list1);
+    console.log(list2);
+    list2.length = 0;
+    for(i = 0 ;  i<list1.length; i++ ){
+
+        let sword = list1[i]["word"];
+      
+        let smeaning = list1[i]["meaning"];
+
+        list2.push({word:sword,meaning:smeaning});
+    }
+
+   
+
 }
