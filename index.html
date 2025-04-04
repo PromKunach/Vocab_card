@@ -16,8 +16,16 @@
 
     <header>
         <nav> 
-            <button onclick="restart()"></button>
-            <button onclick="active_converter()"></button>
+
+            <button onclick="active_Sidebar()"></button>
+            <div class="Side-bar" id="sidebar" >
+                <button class="uti-button" id="restart_button" onclick="restart()"></button>
+                <button class="uti-button" id="convert_active" onclick="active_converter()"></button>
+               
+                <button class="uti-button" id="restart_button"></button>
+                <button class="uti-button" id="convert"></button>
+                
+            </div>
             <button onclick="random_word()"></button>   
         </nav>
     </header>
@@ -36,6 +44,8 @@
     </div>
     
     <article id="timer" class="kanit-bold text">1 / 155</article>
+    <article id="skip-counter" class="kanit-bold text">skipped : 0  </article>
+
      <div id="card">
         <p id="word-eng" class="kanit-regular">Magnetic</p>
         <p id="meaning" class="kanit-regular">ที่ดึงดูด (adj.)</p>

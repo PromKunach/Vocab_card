@@ -250,20 +250,7 @@ function random_word(){
   print_split();
 }
 
-let convert_active_state = 0;
 
-function active_converter(){
-    let converter_div = document.getElementById("coverter_container");
-    if (convert_active_state == 0){
-        converter_div.style.display = "block";
-        convert_active_state = 1;
-    }
-    else if(convert_active_state == 1){
-        converter_div.style.display = "none";
-        convert_active_state = 0;
-    }
-skipped_words.length = 0;
-}
 
 
 
@@ -288,6 +275,7 @@ function submit(){
     let text = input_form.value;
     convert(text);
     active_converter();
+    console.log(sadasda);
    split_tolist(split_line);  
    submit_check(split_words);
    //console.log(split_words);
@@ -366,10 +354,17 @@ let skipped_words = [
    
 ]
 
+let skip_count = 0;
+
 function skip(){
+    skip_count += 1;
+
     let list = split_words;
     let sword = list[current_number]["word"];
     let smeaning = list[current_number]["meaning"];
+    let skip_text = document.getElementById("skip-counter");
+    skip_text.textContent = "skipped : "+ skip_count;
+
     skipped_words.push({word:sword,meaning:smeaning});
 }
 
@@ -388,4 +383,36 @@ function tranfer(list1,list2){
 
    
 
+}
+
+let convert_active_state = 0;
+
+
+function active_converter(){
+    console.log(convert_active_state);
+    let converter_div = document.getElementById("coverter_container");
+    if (convert_active_state == 0){
+        converter_div.style.display = "flex";
+        convert_active_state = 1;
+    }
+    else if(convert_active_state == 1){
+        converter_div.style.display = "none";
+        convert_active_state = 0;
+    }
+skipped_words.length = 0;
+}
+
+let SideBar_status = 0;
+
+function active_Sidebar(){
+    let div = document.getElementById("sidebar");
+    if (SideBar_status == 0){
+        div.style.display = "block";
+        SideBar_status = 1;
+    }
+    else if (SideBar_status == 1){
+        div.style.display = "none";
+        SideBar_status = 0;
+    }
+    
 }
