@@ -221,11 +221,13 @@ function reveal(){
     let meaning_text = document.getElementById("meaning");  
   
     if (reveal_mode == "0"){
-        meaning_text.style.display = "none";
+       //meaning_text.style.display = "none";
+         meaning_text.style.fontSize = "0rem"
         reveal_mode = 1;
     }
     else if (reveal_mode == "1"){
-        meaning_text.style.display = "block";
+        //meaning_text.style.display = "block";
+        meaning_text.style.fontSize = "1.5rem"
         reveal_mode = 0;
     }
 }
@@ -275,6 +277,7 @@ function submit(){
     let text = input_form.value;
     convert(text);
     active_converter();
+    active_Sidebar();
     console.log(sadasda);
    split_tolist(split_line);  
    submit_check(split_words);
@@ -416,3 +419,81 @@ function active_Sidebar(){
     }
     
 }
+
+const word_text_en = document.getElementById("word-eng");
+const meaning_text_th = document.getElementById("meaning");
+const word_list_display = document.getElementById("word-list");
+
+const word_div = document.getElementById("word-div");
+
+function lookup(){
+    let current_display = word_text_en.style.display;
+    let copy_btn = document.getElementById("copy_button");
+
+    let toggle = (current_display == "none") ? 'flex' : 'none';
+
+    let list_toggle = (toggle == "none") ?   'grid': 'none';
+
+    word_text_en.style.display = toggle;
+    meaning_text_th.style.display = toggle;
+
+    word_div.style.display = toggle;
+   word_list_display.style.display = list_toggle;
+   copy_btn.style.display = list_toggle;
+   let grid = document.getElementById("word-list");
+
+   for (let i = 0 ;i<split_words.length;i++){
+    const number_btn = document.createElement('div');
+    number_btn.className = "column-object";
+    number_btn.textContent = i+1;
+    number_btn.id = "number-" + i;
+
+
+    const word_btn = document.createElement('div');
+    word_btn.className = "column-object";
+    word_btn.textContent = split_words[i]["word"];
+    word_btn.id = "word-" + i;
+
+    const meaning_btn = document.createElement('div');
+    meaning_btn.className = "column-object";
+    meaning_btn.textContent = split_words[i]["meaning"];
+    meaning_btn.id = "meaning-" + i;
+
+    grid.appendChild(number_btn);
+    grid.appendChild(word_btn);
+    grid.appendChild(meaning_btn);
+    
+
+
+   }
+
+
+
+}
+
+function join_word(list){
+    let text = "";
+    for(let i = 0; i<list.length;i++){
+        text = text + list[i]["word"] + " : " +list[i]["meaning"] +"\n";
+    }
+    console.log(text);
+    return(text);
+}
+
+join_word(split_words);
+
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        console.log('Copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  }
+
+  function copy_joined_word(){
+    let joint_word = join_word(split_words);
+    copyToClipboard(joint_word);
+  }
