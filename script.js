@@ -278,10 +278,11 @@ function submit(){
     convert(text);
     active_converter();
     active_Sidebar();
-    console.log(sadasda);
    split_tolist(split_line);  
    submit_check(split_words);
    //console.log(split_words);
+   createGrid();
+
    print_split();
    skipped_words.length = 0;
 
@@ -318,6 +319,20 @@ function submit_check(split_list){
 
 
 
+function scrollIfNotVisible(container, element , type) {
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+  
+    const isVisible = (
+      elementRect.top >= containerRect.top &&
+      elementRect.bottom <= containerRect.bottom
+    );
+  
+    if (!isVisible) {
+      element.scrollIntoView({ behavior: 'smooth', block: type });
+    }
+  }
+
 
 
 function add(){
@@ -325,14 +340,31 @@ function add(){
         current_number += 1;
         
         print_split();
+        let grid = document.getElementById("word-list");
+        
+        if (grid.style.display == "grid"){
 
+        let current_highlight_n = document.getElementById('number-'+current_number);
+        let current_highlight_w = document.getElementById('word-'+current_number);
+        let current_highlight_m = document.getElementById('meaning-'+current_number);
+        document.getElementById('number-'+ (current_number-1)).style.backgroundColor = "rgb(232, 232, 246)";
+        document.getElementById('word-'+ (current_number-1)).style.backgroundColor = "rgb(232, 232, 246)" ;
+        document.getElementById('meaning-'+ (current_number-1)).style.backgroundColor = "rgb(232, 232, 246)";
+        current_highlight_n.style.backgroundColor = 'rgb(193 206 244)';
+        current_highlight_w.style.backgroundColor = 'rgb(193 206 244)';
+        current_highlight_m.style.backgroundColor = 'rgb(193 206 244)';
+        scrollIfNotVisible(grid, current_highlight_n,"start");
+    }
+        
     }
     else if((current_number + 1 == split_words.length && skipped_words.length > 0)){
 
         current_number = 0;
         tranfer(skipped_words,split_words);
         print_split();
+        createGrid();
         skipped_words.length = 0;
+       
     }
     //console.log(current_number + "lenght is " + split_words.length);
 
@@ -343,12 +375,29 @@ function add(){
 
 
 function subtract(){
-
+   
     if(current_number > 0){
         current_number -= 1;
         print_split();
+        
     }
-  
+    let grid = document.getElementById("word-list");
+        
+    if (grid.style.display == "grid"){
+
+    let current_highlight_n = document.getElementById('number-'+current_number);
+    let current_highlight_w = document.getElementById('word-'+current_number);
+    let current_highlight_m = document.getElementById('meaning-'+current_number);
+    document.getElementById('number-'+ (current_number+1)).style.backgroundColor = "rgb(232, 232, 246)";
+    document.getElementById('word-'+ (current_number+1)).style.backgroundColor = "rgb(232, 232, 246)" ;
+    document.getElementById('meaning-'+ (current_number+1)).style.backgroundColor = "rgb(232, 232, 246)";
+    current_highlight_n.style.backgroundColor = 'rgb(193 206 244)';
+    current_highlight_w.style.backgroundColor = 'rgb(193 206 244)';
+    current_highlight_m.style.backgroundColor = 'rgb(193 206 244)';
+
+    scrollIfNotVisible(grid, current_highlight_n,'end');
+
+}
     console.log(current_number);
   
 }
@@ -388,20 +437,13 @@ function tranfer(list1,list2){
 
 }
 
-let convert_active_state = 0;
 
 
 function active_converter(){
-    console.log(convert_active_state);
     let converter_div = document.getElementById("coverter_container");
-    if (convert_active_state == 0){
-        converter_div.style.display = "flex";
-        convert_active_state = 1;
-    }
-    else if(convert_active_state == 1){
-        converter_div.style.display = "none";
-        convert_active_state = 0;
-    }
+    let state = (converter_div.style.display == 'flex') ? 'none' : 'flex';
+    converter_div.style.display = state;
+    
 skipped_words.length = 0;
 }
 
@@ -417,7 +459,9 @@ function active_Sidebar(){
         div.style.display = "none";
         SideBar_status = 0;
     }
-    
+    let converter_div = document.getElementById("coverter_container");
+    converter_div.style.display = 'none';
+
 }
 
 const word_text_en = document.getElementById("word-eng");
@@ -427,6 +471,7 @@ const word_list_display = document.getElementById("word-list");
 const word_div = document.getElementById("word-div");
 
 function lookup(){
+    
     let current_display = word_text_en.style.display;
     let copy_btn = document.getElementById("copy_button");
 
@@ -440,36 +485,57 @@ function lookup(){
     word_div.style.display = toggle;
    word_list_display.style.display = list_toggle;
    copy_btn.style.display = list_toggle;
-   let grid = document.getElementById("word-list");
+   createGrid();
 
-   for (let i = 0 ;i<split_words.length;i++){
-    const number_btn = document.createElement('div');
-    number_btn.className = "column-object";
-    number_btn.textContent = i+1;
-    number_btn.id = "number-" + i;
-
-
-    const word_btn = document.createElement('div');
-    word_btn.className = "column-object";
-    word_btn.textContent = split_words[i]["word"];
-    word_btn.id = "word-" + i;
-
-    const meaning_btn = document.createElement('div');
-    meaning_btn.className = "column-object";
-    meaning_btn.textContent = split_words[i]["meaning"];
-    meaning_btn.id = "meaning-" + i;
-
-    grid.appendChild(number_btn);
-    grid.appendChild(word_btn);
-    grid.appendChild(meaning_btn);
-    
-
-
-   }
+   
 
 
 
 }
+
+
+function createGrid(){
+
+    let grid = document.getElementById("word-list");
+
+    grid.innerHTML = '';
+    for (let i = 0 ;i<split_words.length;i++){
+     const number_btn = document.createElement('div');
+     number_btn.className = "column-object kanit-regular";
+     number_btn.textContent = i+1;
+     number_btn.id = "number-" + i;
+ 
+ 
+     const word_btn = document.createElement('div');
+     word_btn.className = "column-object kanit-regular";
+     word_btn.textContent = split_words[i]["word"];
+     word_btn.id = "word-" + i;
+ 
+     const meaning_btn = document.createElement('div');
+     meaning_btn.className = "column-object kanit-regular";
+     meaning_btn.textContent = split_words[i]["meaning"];
+     meaning_btn.id = "meaning-" + i;
+ 
+     grid.appendChild(number_btn);
+     grid.appendChild(word_btn);
+     grid.appendChild(meaning_btn);
+     
+ 
+ 
+    }
+    let current_highlight_n = document.getElementById('number-'+current_number);
+   let current_highlight_w = document.getElementById('word-'+current_number);
+   let current_highlight_m = document.getElementById('meaning-'+current_number);
+
+
+
+   current_highlight_n.style.backgroundColor = 'rgb(193 206 244)';
+   current_highlight_w.style.backgroundColor = 'rgb(193 206 244)';
+   current_highlight_m.style.backgroundColor = 'rgb(193 206 244)';
+   scrollIfNotVisible(grid, current_highlight_n,"start");
+
+}
+
 
 function join_word(list){
     let text = "";
