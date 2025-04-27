@@ -619,3 +619,4 @@ function copyToClipboard(text) {
     let joint_word = join_word(split_words);
     copyToClipboard(joint_word);
   }
+  console.log("hi");
