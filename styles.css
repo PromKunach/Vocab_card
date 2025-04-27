@@ -6,6 +6,10 @@ body {
     height: 700px;
 }
 
+button {
+  z-index: 100;
+}
+
 .text{
     color: rgb(0, 0, 0);
 }
@@ -31,7 +35,9 @@ nav button{
     height: 48px;
     margin: 24px;
     border-radius: 10px;
+    z-index: 100;
 }
+
 
 .Side-bar{
   position: absolute;
@@ -114,12 +120,15 @@ nav button{
   border-radius: 8px;
   border: 0px;  
 }
-
-#copy_button{
+#reveal_button_2{
   display: none;
   grid-column: 8;
 }
 
+#copy_button{
+  display: none;
+  grid-column: 7;
+}
 
 
 #word-div{
@@ -155,6 +164,7 @@ nav button{
 #word-list{
   width: 100%;
   height: fit-content;
+  border-radius: 0px 0px 16px 16px ;
   border-bottom: 3px solid #000000;
   background-color: rgba(255, 255, 255, 0);
   display: none;
@@ -162,7 +172,7 @@ nav button{
   grid-auto-rows: auto; 
   grid-auto-columns: auto;
   overflow: auto;
-
+  
 }
 
 .column-object{
@@ -196,6 +206,29 @@ footer{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  
+}
+
+.touch button{
+  width: 30%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0);
+  position: absolute;
+  border: 0px;
+}
+
+#touch-right{
+  right: 0px;
+}
+
+#touch-reveal{
+  left: 50%;
+  transform: translateX(-50%);
+
+  top: 250px;
+  width: 300px;
+  height: 350px;
+  background-color: rgba(255, 0, 0, 0);
   
 }
 

@@ -420,6 +420,44 @@ function skip(){
     skipped_words.push({word:sword,meaning:smeaning});
 }
 
+const swipe_area = document.getElementById("touch-reveal");
+let startX = 0;
+let startY = 0;
+
+swipe_area.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+});
+
+swipe_area.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    const minimum_swipe = 50;
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > minimum_swipe) {
+          console.log('Swipe Right');
+        } else if (diffX < -minimum_swipe) {
+          console.log('Swipe Left');
+        }
+
+      } else {
+        if (diffY > minimum_swipe) {
+          console.log('Swipe Down');
+        } else if (diffY < -minimum_swipe) {
+            skip();
+        }
+      }
+});
+
+
+
+
+
+
 function tranfer(list1,list2){
     console.log(list1);
     console.log(list2);
@@ -473,7 +511,7 @@ const word_div = document.getElementById("word-div");
 function lookup(){
     
     let current_display = word_text_en.style.display;
-    let copy_btn = document.getElementById("copy_button");
+    let lookup_btn = document.querySelectorAll('.grid-btn');
 
     let toggle = (current_display == "none") ? 'flex' : 'none';
 
@@ -481,10 +519,17 @@ function lookup(){
 
     word_text_en.style.display = toggle;
     meaning_text_th.style.display = toggle;
+    swipe_area.style.display = toggle;
 
     word_div.style.display = toggle;
    word_list_display.style.display = list_toggle;
-   copy_btn.style.display = list_toggle;
+
+   
+   lookup_btn.forEach(btn => {
+    btn.style.display = list_toggle;
+  
+  });
+
    createGrid();
 
    
@@ -501,18 +546,18 @@ function createGrid(){
     grid.innerHTML = '';
     for (let i = 0 ;i<split_words.length;i++){
      const number_btn = document.createElement('div');
-     number_btn.className = "column-object kanit-regular";
+     number_btn.className = "column-object kanit-regular n_c";
      number_btn.textContent = i+1;
      number_btn.id = "number-" + i;
  
  
      const word_btn = document.createElement('div');
-     word_btn.className = "column-object kanit-regular";
+     word_btn.className = "column-object kanit-regular w_c";
      word_btn.textContent = split_words[i]["word"];
      word_btn.id = "word-" + i;
  
      const meaning_btn = document.createElement('div');
-     meaning_btn.className = "column-object kanit-regular";
+     meaning_btn.className = "column-object kanit-regular m_c";
      meaning_btn.textContent = split_words[i]["meaning"];
      meaning_btn.id = "meaning-" + i;
  
@@ -534,6 +579,17 @@ function createGrid(){
    current_highlight_m.style.backgroundColor = 'rgb(193 206 244)';
    scrollIfNotVisible(grid, current_highlight_n,"start");
 
+}
+
+function toggle_reveal(){
+    let class_obj = document.querySelectorAll('.m_c');
+    let original_color = class_obj[0].style.color;
+    class_obj.forEach(obj => {
+
+        let toggle = (obj.style.color == 'black') ?'transparent' :  'black';
+        obj.style.color = toggle;
+    });
+    console.log(original_color);
 }
 
 

@@ -12,12 +12,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <body>
-    
-
+    <div class="touch" id="touch-area">
+        <button id="touch-right" onclick="add()"></button>
+        <button id="touch-left" onclick="subtract()"> </button>
+        <button id="touch-reveal" onclick="reveal()" ></button>
+    </div>
     <header>
         <nav> 
 
-            <button onclick="active_Sidebar()"></button>
+            <button onclick="active_Sidebar()" id="sb_act"></button>
             <div class="Side-bar" id="sidebar" >
                 <button class="uti-button" id="restart_button" onclick="restart()"></button>
                 <button class="uti-button" id="convert_active" onclick="active_converter()"></button>
@@ -47,8 +50,9 @@
 
      <div id="card">
         <div id="card-nav-div">
-            <button class="card-button" id="lookup_button" onclick="lookup()"></button>
-            <button class="card-button" id="copy_button" onclick="copy_joined_word()"></button>
+            <button class="card-button " id="lookup_button" onclick="lookup()"></button>
+            <button class="card-button grid-btn" id="copy_button" onclick="copy_joined_word()"></button>
+            <button class="card-button grid-btn" id="reveal_button_2" onclick="toggle_reveal()"></button>
             
 
 
@@ -73,14 +77,12 @@
      
      <footer>
         <div id="skip" >
-            <button onclick="skip()"></button>
 
         </div>
         <div id="control-button">
             
-            <button onclick="subtract()"></button>
-            <button onclick="reveal()"></button>
-            <button onclick="add()"></button>
+           
+           
         </div>
      </footer>
     
