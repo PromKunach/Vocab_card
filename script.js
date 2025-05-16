@@ -439,16 +439,19 @@ swipe_area.addEventListener('touchend', (e) => {
     const minimum_swipe = 50;
     if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > minimum_swipe) {
-          console.log('Swipe Right');
+            subtract();
         } else if (diffX < -minimum_swipe) {
           console.log('Swipe Left');
+          add();
+
         }
 
       } else {
         if (diffY > minimum_swipe) {
           console.log('Swipe Down');
-        } else if (diffY < -minimum_swipe) {
             skip();
+        } else if (diffY < -minimum_swipe) {
+          reveal();
         }
       }
 });
@@ -519,7 +522,7 @@ function lookup(){
 
     word_text_en.style.display = toggle;
     meaning_text_th.style.display = toggle;
-    swipe_area.style.display = toggle;
+    //swipe_area.style.display = toggle;
 
     word_div.style.display = toggle;
    word_list_display.style.display = list_toggle;
@@ -586,7 +589,7 @@ function toggle_reveal(){
     let original_color = class_obj[0].style.color;
     class_obj.forEach(obj => {
 
-        let toggle = (obj.style.color == 'black') ?'transparent' :  'black';
+        let toggle = (obj.style.color == 'transparent') ?  'black': 'transparent';
         obj.style.color = toggle;
     });
     console.log(original_color);
